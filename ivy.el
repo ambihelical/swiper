@@ -2672,8 +2672,9 @@ Otherwise, ~/ will move home."
   "Insert Ivy completions display, possibly after a timeout for
 dynamic collections.
 Should be run via minibuffer `post-command-hook'."
-  (if (and (> ivy-dynamic-exhibit-delay-ms 0)
-           (ivy-state-dynamic-collection ivy-last))
+;;  (if (and (> ivy-dynamic-exhibit-delay-ms 0)
+;;           (ivy-state-dynamic-collection ivy-last))
+  (if (> ivy-dynamic-exhibit-delay-ms 0)
       (progn
         (when ivy--exhibit-timer (cancel-timer ivy--exhibit-timer))
         (setq ivy--exhibit-timer
