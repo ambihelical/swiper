@@ -2681,10 +2681,11 @@ Should be run via minibuffer `post-command-hook'."
               (run-with-timer
                (/ ivy-dynamic-exhibit-delay-ms 1000.0)
                nil
-               'ivy--exhibit)))
+               'ivy--exhibit))
+        (ivy--exhibit t))
     (ivy--exhibit)))
 
-(defun ivy--exhibit ()
+(defun ivy--exhibit (&optional no-filter)
   "Insert Ivy completions display.
 Should be run via minibuffer `post-command-hook'."
   (when (memq 'ivy--queue-exhibit post-command-hook)
@@ -2727,7 +2728,8 @@ Should be run via minibuffer `post-command-hook'."
       (ivy--insert-minibuffer
        (with-current-buffer (ivy-state-buffer ivy-last)
          (ivy--format
-          (ivy--filter ivy-text ivy--all-candidates))))
+          (or (and no-filter ivy--old-cands)
+              (ivy--filter ivy-text ivy--all-candidates)))))
       (setq ivy--old-text ivy-text))))
 
 (defun ivy-display-function-fallback (str)
